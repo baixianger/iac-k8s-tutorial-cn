@@ -23,16 +23,16 @@ title: 端到端工程教学
 | 章 | 标题 | 主题 | 状态 |
 |---|---|---|---|
 | 00 | [学习路线图](00-roadmap.html) | 整体目标 + 章节地图 | ✅ |
-| 01 | IaC 与 Terraform 基础 | 为什么不用手点 Console | ⏳ |
-| 02 | HCL 语法 | 块、参数、表达式 | ⏳ |
-| 03 | Terraform 工作流 | init/plan/apply/state | ⏳ |
-| 04 | GKE — Provider 与 Variables | `main.tf`, `variables.tf` | ⏳ |
-| 05 | GKE — 网络 | `network.tf` (VPC, subnet, NAT) | ⏳ |
-| 06 | GKE — Autopilot 集群 | `cluster.tf` | ⏳ |
-| 07 | GKE — 存储与 IAM | `storage.tf`, `iam.tf` | ⏳ |
-| 08 | GKE — Outputs | `outputs.tf` | ⏳ |
-| 09 | Hetzner 假设 Terraform | 同样 IaaS，换 provider | ⏳ |
-| 10 | Hetzner 真实路径 | `hetzner-k3s` + `cluster.yaml` | ⏳ |
+| 01 | [IaC 与 Terraform 基础](01-iac-and-terraform.html) | 为什么不用手点 Console | ✅ |
+| 02 | [HCL 语法](02-hcl-syntax.html) | 块、参数、表达式 | ✅ |
+| 03 | [Terraform 工作流](03-terraform-workflow.html) | init/plan/apply/state | ✅ |
+| 04 | [GKE — Provider 与 Variables](04-gke-provider-variables.html) | `main.tf`, `variables.tf` | ✅ |
+| 05 | [GKE — 网络](05-gke-network.html) | `network.tf` (VPC, subnet, NAT) | ✅ |
+| 06 | [GKE — Autopilot 集群](06-gke-cluster.html) | `cluster.tf` | ✅ |
+| 07 | [GKE — 存储与 IAM](07-gke-storage-iam.html) | `storage.tf`, `iam.tf` | ✅ |
+| 08 | [GKE — Outputs](08-gke-outputs.html) | `outputs.tf` | ✅ |
+| 09 | [Hetzner 假设 Terraform](09-hetzner-hypothetical.html) | 同样 IaaS，换 provider | ✅ |
+| 10 | [Hetzner 真实路径](10-hetzner-real-path.html) | `hetzner-k3s` + `cluster.yaml` | ✅ |
 | 11 | K8s 概念 — Pod 与 Deployment | 集群里"跑啥东西"的最小单元 | ⏳ |
 | 12 | K8s 概念 — Job / CronJob / Namespace | 一次性任务、定时任务 | ⏳ |
 | 13 | K8s 状态 — ConfigMap / Secret / PVC | 配置、密钥、持久化 | ⏳ |
