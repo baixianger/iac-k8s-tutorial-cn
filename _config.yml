@@ -1,0 +1,21 @@
+# GitHub Pages — Jekyll config for the standalone cloud-native tutorial site.
+#
+# Theme `cayman` ships with GitHub Pages out of the box (no plugin install).
+# It's a wide-column theme with strong typography — works well for long
+# technical reading.
+#
+# To enable on GitHub:
+#   Repo → Settings → Pages → Source = "Deploy from a branch"
+#                          → Branch = "main" / "/ (root)"
+#   Wait ~1 minute. Site appears at https://<owner>.github.io/<repo>/
+
+title: 端到端云原生工程教学
+description: Terraform + Kubernetes + 双云部署（GKE + Hetzner） · 中文 · 零基础
+theme: jekyll-theme-cayman
+
+# Don't render certain files as standalone pages.
+exclude:
+  - README.md
+  - "*.pdf"
+  - imgs/
+  - images/
