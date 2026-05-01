@@ -11,7 +11,7 @@
 
 ## 在线阅读
 
-GitHub Pages 站点：<https://OWNER.github.io/REPO/>（部署后填）
+GitHub Pages 站点：<https://baixianger.github.io/iac-k8s-tutorial-cn/>
 
 ## 本地预览
 
