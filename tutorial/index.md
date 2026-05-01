@@ -18,7 +18,7 @@ title: 端到端工程教学
 
 ## 章节清单
 
-> ✅ 已完成 ⏳ 待写 — 每章独立，可单独读
+> ✅ 全部 19 章已完成 — 每章独立，可单独读
 
 | 章 | 标题 | 主题 | 状态 |
 |---|---|---|---|
@@ -33,14 +33,14 @@ title: 端到端工程教学
 | 08 | [GKE — Outputs](08-gke-outputs.html) | `outputs.tf` | ✅ |
 | 09 | [Hetzner 假设 Terraform](09-hetzner-hypothetical.html) | 同样 IaaS，换 provider | ✅ |
 | 10 | [Hetzner 真实路径](10-hetzner-real-path.html) | `hetzner-k3s` + `cluster.yaml` | ✅ |
-| 11 | K8s 概念 — Pod 与 Deployment | 集群里"跑啥东西"的最小单元 | ⏳ |
-| 12 | K8s 概念 — Job / CronJob / Namespace | 一次性任务、定时任务 | ⏳ |
-| 13 | K8s 状态 — ConfigMap / Secret / PVC | 配置、密钥、持久化 | ⏳ |
-| 14 | kubectl 命令实战 | get / describe / apply / logs / exec | ⏳ |
-| 15 | Kustomize 编排 manifest | 多环境复用 | ⏳ |
-| 16 | Kubernetes Python SDK | 本项目 `k8s_manager` 怎么用 | ⏳ |
-| 17 | 端到端走一遍 | 从 .tf 写下第一行 → 数据落 GCS 全过程 | ⏳ |
-| 18 | FAQ | 常见疑问 + 故障排查 | ⏳ |
+| 11 | [K8s 概念 — Pod 与 Deployment](11-k8s-pod-deployment.html) | 集群里"跑啥东西"的最小单元 | ✅ |
+| 12 | [K8s 概念 — Job / CronJob / Namespace](12-k8s-job-cronjob.html) | 一次性任务、定时任务 | ✅ |
+| 13 | [K8s 状态 — ConfigMap / Secret / PVC](13-k8s-configmap-secret-pvc.html) | 配置、密钥、持久化 | ✅ |
+| 14 | [kubectl 命令实战](14-kubectl.html) | get / describe / apply / logs / exec | ✅ |
+| 15 | [Kustomize 编排 manifest](15-kustomize.html) | 多环境复用 | ✅ |
+| 16 | [Kubernetes Python SDK](16-k8s-python-sdk.html) | 程序化集群管理 | ✅ |
+| 17 | [端到端走一遍](17-end-to-end.html) | 从 .tf 写下第一行 → 数据落 GCS 全过程 | ✅ |
+| 18 | [FAQ](18-faq.html) | 常见疑问 + 故障排查 | ✅ |
 
 ## 学习顺序建议
 
