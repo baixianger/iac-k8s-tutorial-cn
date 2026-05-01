@@ -401,7 +401,7 @@ variable "cluster_name" {
 variable "admin_cidr" {
   description = "CIDR allowed to hit the public control plane endpoint."
   type        = string
-  default     = "188.180.104.0/32"
+  default     = "203.0.113.42/32"
 }
 
 variable "master_cidr" {
@@ -445,7 +445,7 @@ variable "name" {       # name = 变量名，引用时用 var.name
 | `project_id` | string | `my-cloud-project` | 整个 stack 都用它，决定资源在哪个 GCP 项目 |
 | `region` | string | `europe-west3` | Frankfurt（德国），跟 Hetzner 物理就近 |
 | `cluster_name` | string | `my-cluster` | GKE 集群名，也是 VPC / NAT 等资源名前缀 |
-| `admin_cidr` | string | `188.180.104.0/32` | 你的家庭 IP（操作 kubectl 必备） |
+| `admin_cidr` | string | `203.0.113.42/32` | 你的家庭 IP（操作 kubectl 必备） |
 | `master_cidr` | string | `172.16.0.0/28` | 私有控制面 CIDR，必须 /28，跟你 VPC 不能冲突 |
 | `ar_repo_id` | string | `my-app` | Artifact Registry repo 名 |
 | `websites_bucket_suffix` | string | `websites-data` | bucket 名后缀，完整名 `my-cloud-project-websites-data` |
@@ -1268,7 +1268,7 @@ variable "admin_ssh_public_key" {
 
 variable "admin_cidr" {
   description = "CIDR allowed to SSH and reach k3s API"
-  default     = "188.180.104.0/32"
+  default     = "203.0.113.42/32"
   type        = string
 }
 ```
@@ -1566,7 +1566,7 @@ master_authorized_networks_config {
 variable "admin_cidrs" {
   type    = list(object({ cidr = string, name = string }))
   default = [
-    { cidr = "188.180.104.0/32", name = "admin" },
+    { cidr = "203.0.113.42/32", name = "admin" },
     { cidr = "1.2.3.4/32",       name = "colleague" },
   ]
 }
