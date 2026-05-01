@@ -165,7 +165,7 @@ terraform {                    # 块（block）
 
 variable "project_id" {        # 块带 label
   type    = string             # 参数
-  default = "enetpulse-agent"
+  default = "my-cloud-project"
 }
 
 resource "google_compute_network" "gke" {  # 块带 type + name 两个 label
@@ -228,7 +228,7 @@ var.cluster_name                         # 引用 variable "cluster_name"
 google_compute_network.gke.id            # 引用 resource "google_compute_network" 名 "gke" 的 .id 属性
 google_compute_network.gke.self_link     # 同上 .self_link 属性
 
-"${var.cluster_name}-vpc"                # 字符串插值，结果如 "enetpulse-gke-vpc"
+"${var.cluster_name}-vpc"                # 字符串插值，结果如 "my-cluster-vpc"
 "${var.cluster_name}-${var.region}"      # 多变量拼接
 ```
 
@@ -247,7 +247,7 @@ data.google_project.current.project_id   # 引用 data 块查到的属性
 
 ```hcl
 variable "cluster_name" {
-  default = "enetpulse-gke"
+  default = "my-cluster"
 }
 ```
 
@@ -255,7 +255,7 @@ variable "cluster_name" {
 
 ```hcl
 resource "google_compute_network" "gke" {
-  name = "${var.cluster_name}-vpc"  # 实际渲染成 "enetpulse-gke-vpc"
+  name = "${var.cluster_name}-vpc"  # 实际渲染成 "my-cluster-vpc"
 }
 ```
 
@@ -263,7 +263,7 @@ resource "google_compute_network" "gke" {
 
 ```
 ~ resource "google_compute_network" "gke" {
-    name: "enetpulse-gke-vpc" → "my-test-vpc"  (forces replacement)
+    name: "my-cluster-vpc" → "my-test-vpc"  (forces replacement)
 }
 ```
 
@@ -383,7 +383,7 @@ provider "google" {
 variable "project_id" {
   description = "GCP project ID hosting the cluster + AR + GCS."
   type        = string
-  default     = "enetpulse-agent"
+  default     = "my-cloud-project"
 }
 
 variable "region" {
@@ -395,7 +395,7 @@ variable "region" {
 variable "cluster_name" {
   description = "Cluster name. Sandbox tests should use a different value..."
   type        = string
-  default     = "enetpulse-gke"
+  default     = "my-cluster"
 }
 
 variable "admin_cidr" {
@@ -413,7 +413,7 @@ variable "master_cidr" {
 variable "ar_repo_id" {
   description = "Artifact Registry repository ID."
   type        = string
-  default     = "enetpulse"
+  default     = "my-app"
 }
 
 variable "websites_bucket_suffix" {
@@ -442,13 +442,13 @@ variable "name" {       # name = 变量名，引用时用 var.name
 
 | 变量 | 类型 | 默认 | 用来做什么 |
 |---|---|---|---|
-| `project_id` | string | `enetpulse-agent` | 整个 stack 都用它，决定资源在哪个 GCP 项目 |
+| `project_id` | string | `my-cloud-project` | 整个 stack 都用它，决定资源在哪个 GCP 项目 |
 | `region` | string | `europe-west3` | Frankfurt（德国），跟 Hetzner 物理就近 |
-| `cluster_name` | string | `enetpulse-gke` | GKE 集群名，也是 VPC / NAT 等资源名前缀 |
+| `cluster_name` | string | `my-cluster` | GKE 集群名，也是 VPC / NAT 等资源名前缀 |
 | `admin_cidr` | string | `188.180.104.0/32` | 你的家庭 IP（操作 kubectl 必备） |
 | `master_cidr` | string | `172.16.0.0/28` | 私有控制面 CIDR，必须 /28，跟你 VPC 不能冲突 |
-| `ar_repo_id` | string | `enetpulse` | Artifact Registry repo 名 |
-| `websites_bucket_suffix` | string | `websites-data` | bucket 名后缀，完整名 `enetpulse-agent-websites-data` |
+| `ar_repo_id` | string | `my-app` | Artifact Registry repo 名 |
+| `websites_bucket_suffix` | string | `websites-data` | bucket 名后缀，完整名 `my-cloud-project-websites-data` |
 | `audit_bucket_suffix` | string | `audit` | 审计 bucket 后缀 |
 
 ### 4.3 三种覆盖默认的方式
@@ -482,9 +482,9 @@ variable "name" {       # name = 变量名，引用时用 var.name
 我们项目还有 `terraform.tfvars.example`（**进 git**）作为模板：
 
 ```hcl
-# project_id = "enetpulse-agent"      # 默认就是这个
+# project_id = "my-cloud-project"      # 默认就是这个
 # admin_cidr = "1.2.3.4/32"           # 务必改成你的 /32
-# cluster_name = "enetpulse-gke-test" # sandbox 用 -test 后缀
+# cluster_name = "my-cluster-test" # sandbox 用 -test 后缀
 ```
 
 ### 4.4 派生变量（不直接定义，从其他变量算出）
@@ -494,7 +494,7 @@ variable "name" {       # name = 变量名，引用时用 var.name
 ```hcl
 resource "google_storage_bucket" "websites" {
   name = "${var.project_id}-${var.websites_bucket_suffix}"
-  # 渲染成: "enetpulse-agent-websites-data"
+  # 渲染成: "my-cloud-project-websites-data"
 }
 ```
 
@@ -572,10 +572,10 @@ resource "google_compute_network" "gke" {
 - `resource` 块声明"我要创建一个 VPC"
 - 第一个 label `google_compute_network` = 资源**类型**（由 google provider 提供）
 - 第二个 label `gke` = 资源**本地名字**（你自己起的，仅 Terraform 内部引用用）
-- `name = "${var.cluster_name}-vpc"` = VPC 在 GCP 上**实际显示**的名字（如 "enetpulse-gke-vpc"）
+- `name = "${var.cluster_name}-vpc"` = VPC 在 GCP 上**实际显示**的名字（如 "my-cluster-vpc"）
 - `auto_create_subnetworks = false` = 关闭"自动建子网"——我们手工指定子网
 
-> **本地名字 vs 实际名字**：`gke` 是你写代码引用时用的（如 `google_compute_network.gke.id`）；`enetpulse-gke-vpc` 是 GCP 真给的名字。两者不需要一样。
+> **本地名字 vs 实际名字**：`gke` 是你写代码引用时用的（如 `google_compute_network.gke.id`）；`my-cluster-vpc` 是 GCP 真给的名字。两者不需要一样。
 
 ### 5.3 第二个 resource：subnet
 
@@ -912,7 +912,7 @@ resource "google_storage_bucket" "audit" {
 ```hcl
 resource "google_storage_bucket" "websites" {
   name = "${var.project_id}-${var.websites_bucket_suffix}"
-  # 渲染成: "enetpulse-agent-websites-data"
+  # 渲染成: "my-cloud-project-websites-data"
 ```
 
 bucket name **全球唯一**——所以拼了 project_id 前缀避免撞名。
@@ -1046,7 +1046,7 @@ resource "google_storage_bucket_iam_member" "audit_writer_event" {
 
 这才是给 GSA "实际能干啥"的权限：
 
-- 在 `enetpulse-agent-audit` bucket 上有 `storage.objectAdmin` 权限
+- 在 `my-cloud-project-audit` bucket 上有 `storage.objectAdmin` 权限
 - `objectAdmin` 包含 read / write / delete 对象——比 `objectViewer` 强，比 `admin` 弱（不能改 bucket 配置）
 
 ### 8.4 串起来：pod 写 audit 的链路
@@ -1056,9 +1056,9 @@ Pod (browser-service/event-agent-sa K8s ServiceAccount)
     ↓ Workload Identity binding
 GSA: event-job@{project}.iam.gserviceaccount.com
     ↓ storage.objectAdmin role
-GCS bucket: enetpulse-agent-audit
+GCS bucket: my-cloud-project-audit
     ↓ 写
-gs://enetpulse-agent-audit/multi-step/{site}/{sport}-{key8}/{date}/scheduled.json
+gs://my-cloud-project-audit/multi-step/{site}/{sport}-{key8}/{date}/scheduled.json
 ```
 
 每个箭头都是一个 IAM 检查点。**少一个**绑定，整条链路就断。我们之前踩的坑（`storage.objectAdmin missing`）就是在第三个箭头那里——只给了 `objectViewer` 没给 `objectAdmin`。
@@ -1134,7 +1134,7 @@ output "cluster_name" {
 ```hcl
 output "ar_repo_url" {
   value = "${var.region}-docker.pkg.dev/${var.project_id}/${var.ar_repo_id}"
-  # 渲染成: europe-west3-docker.pkg.dev/enetpulse-agent/enetpulse
+  # 渲染成: europe-west3-docker.pkg.dev/my-cloud-project/my-app
 }
 ```
 
@@ -1156,8 +1156,8 @@ output "cluster_endpoint" {
 ### 9.4 我们项目怎么用 outputs
 
 ```bash
-terraform output -raw cluster_name           # → "enetpulse-gke"
-terraform output -raw ar_repo_url            # → "europe-west3-docker.pkg.dev/enetpulse-agent/enetpulse"
+terraform output -raw cluster_name           # → "my-cluster"
+terraform output -raw ar_repo_url            # → "europe-west3-docker.pkg.dev/my-cloud-project/my-app"
 terraform output -json                       # → 所有 outputs 的 JSON
 ```
 
@@ -1237,7 +1237,7 @@ variable "hcloud_token" {
 }
 
 variable "cluster_name" {
-  default = "enetpulse"
+  default = "my-app"
   type    = string
 }
 
@@ -1450,7 +1450,7 @@ output "kubeconfig_hint" {
 
 ```yaml
 # cluster.yaml (摘自我们项目)
-cluster_name: enetpulse
+cluster_name: my-app
 kubeconfig_path: "~/.kube/hetzner-config"
 k3s_version: v1.34.6+k3s1
 
@@ -1536,7 +1536,7 @@ resource "google_compute_address" "extra_egress" {
 **答案**：
 - `google_compute_address` = 静态外部 IP
 - 应该放在 `network.tf`（属于网络层）
-- 建出来一个全球唯一的静态 public IPv4 地址，名字 `enetpulse-gke-extra-egress`
+- 建出来一个全球唯一的静态 public IPv4 地址，名字 `my-cluster-extra-egress`
 
 ### 练习 2：改 admin_cidr 让另一个人也能 kubectl
 
@@ -1682,7 +1682,7 @@ Terraform 把"集群"这个对象建出来，但**集群里的 deployment / pod 
 # main.tf
 terraform {
   backend "gcs" {
-    bucket = "enetpulse-terraform-state"
+    bucket = "my-app-terraform-state"
     prefix = "gke-infra/"
   }
 }
