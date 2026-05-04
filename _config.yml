@@ -14,8 +14,9 @@ description: Terraform + Kubernetes + 双云部署（GKE + Hetzner） · 中文 
 theme: jekyll-theme-cayman
 
 # Don't render certain files as standalone pages.
+# IMPORTANT: do NOT exclude images/ — Jekyll's `exclude` removes them from the
+# built site entirely, breaking <img> references. Only exclude things that
+# should not be served at all (PDFs, the README aimed at GitHub repo readers).
 exclude:
   - README.md
   - "*.pdf"
-  - imgs/
-  - images/
