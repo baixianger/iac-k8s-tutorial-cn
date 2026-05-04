@@ -11,6 +11,9 @@ title: 11 — K8s Pod 与 Deployment
 
 这一章建立 K8s 的核心心智模型 —— **Pod 不是孤立运行的，永远被某种控制器管着**。
 
+![Pod / ReplicaSet / Deployment 三层关系 + 自愈机制](../images/pod-deployment.png)
+*图：Pod / ReplicaSet / Deployment 三层关系 + 自愈机制*
+
 ## 1. Pod —— K8s 的最小调度单元
 
 ### 1.1 什么是 Pod

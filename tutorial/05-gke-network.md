@@ -9,6 +9,9 @@ title: 05 — GKE 网络
 
 集群没有 VPC 跑不起来 —— 所有 Autopilot node 必须在某个 VPC 里。这一章解读 `network.tf`：VPC + subnet + NAT 三件套。
 
+![GKE 网络拓扑：VPC + 主子网 + 2 个 secondary CIDR + 唯一出口 NAT IP](../images/gke-network.png)
+*图：GKE 网络拓扑：VPC + 主子网 + 2 个 secondary CIDR + 唯一出口 NAT IP*
+
 ## 1. network.tf 全文
 
 ```hcl

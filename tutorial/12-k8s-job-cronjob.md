@@ -15,6 +15,9 @@ Deployment 解决的是"常驻服务"。但很多任务**不是常驻**：
 
 K8s 给这些场景两个专门资源：**Job** 和 **CronJob**。最后顺带学 **Namespace**，因为生产集群一定会用到。
 
+![CronJob → Job → Pod 链路 + 三种工作负载对比](../images/job-cronjob.png)
+*图：CronJob → Job → Pod 链路 + 三种工作负载对比*
+
 ## 1. Job —— 跑到完成就停
 
 ### 1.1 Pod 的限制

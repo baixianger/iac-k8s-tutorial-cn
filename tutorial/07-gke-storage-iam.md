@@ -12,6 +12,9 @@ title: 07 — GKE 存储与 IAM
 - `storage.tf` —— GCS bucket
 - `iam.tf` —— Service Account + Workload Identity 绑定 + bucket 权限
 
+![Workload Identity 链路：Pod → KSA → GSA → 资源，整链不带 JSON key](../images/workload-identity.png)
+*图：Workload Identity 链路：Pod → KSA → GSA → 资源，整链不带 JSON key*
+
 ## 1. storage.tf — GCS bucket
 
 ```hcl

@@ -9,6 +9,9 @@ title: 03 — Terraform 工作流
 
 四个动词 + 一个文件。会了这五样，你就理解了 Terraform 的全部"操作语义"。
 
+![Terraform 工作流：4 个动词围绕中心 state 文件运转](../images/tf-workflow.png)
+*图：Terraform 工作流：4 个动词围绕中心 state 文件运转*
+
 ## 1. 四个核心动词
 
 ```bash

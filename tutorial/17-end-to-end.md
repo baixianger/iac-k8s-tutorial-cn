@@ -11,6 +11,9 @@ title: 17 — 端到端走一遍
 
 > 用 Hetzner 的话，前几步换成 `hetzner-k3s create` 即可，后面 K8s 这部分完全一样。
 
+![端到端 3 阶段：Terraform 建底 → kubectl 部署系统 → workload 跑数据](../images/e2e-pipeline.png)
+*图：端到端 3 阶段：Terraform 建底 → kubectl 部署系统 → workload 跑数据*
+
 ## 1. 前置条件（Phase 0）
 
 ### 1.1 装好工具

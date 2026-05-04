@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 620" font-family="-apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, &quot;Helvetica Neue&quot;, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1f2937"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#7c3aed"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="620" fill="#ffffff"/>
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="600" fill="#111827">Workload Identity 链路</text>
+  <text x="550" y="62" text-anchor="middle" font-size="13" fill="#6b7280">Pod 怎么用 GCP 权限——4 层 binding，整条链不带任何 JSON key 文件</text>
+  <rect x="40" y="100" width="500" height="380" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="60" y="124" font-size="12" font-weight="600" fill="#1e40af">Kubernetes 集群（namespace: browser-service）</text>
+  <rect x="560" y="100" width="500" height="380" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="580" y="124" font-size="12" font-weight="600" fill="#78350f">GCP IAM &amp; 资源</text>
+  <g>
+    <rect x="80" y="160" width="200" height="100" rx="8" fill="#dbeafe" stroke="#1e40af" stroke-width="1.5"/>
+    <text x="180" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">[1] Pod</text>
+    <text x="180" y="204" text-anchor="middle" font-size="11" font-family="monospace" fill="#1d4ed8">event-job-xxx</text>
+    <text x="180" y="222" text-anchor="middle" font-size="10" fill="#1e40af" font-style="italic">spec.serviceAccountName:</text>
+    <text x="180" y="238" text-anchor="middle" font-size="10" font-family="monospace" fill="#7f1d1d" font-weight="600">event-agent-sa</text>
+    <text x="180" y="252" text-anchor="middle" font-size="9" fill="#1e40af">↓ 用这个 KSA 跑</text>
+  </g>
+  <g>
+    <rect x="320" y="160" width="200" height="100" rx="8" fill="#bfdbfe" stroke="#1e40af" stroke-width="2"/>
+    <text x="420" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#1e3a8a">[2] KSA</text>
+    <text x="420" y="200" text-anchor="middle" font-size="10" fill="#1e40af">K8s ServiceAccount</text>
+    <text x="420" y="218" text-anchor="middle" font-size="11" font-family="monospace" fill="#1d4ed8">event-agent-sa</text>
+    <text x="420" y="236" text-anchor="middle" font-size="10" fill="#1e40af" font-style="italic">annotation:</text>
+    <text x="420" y="250" text-anchor="middle" font-size="9" font-family="monospace" fill="#7f1d1d">iam.gke.io/gcp-service-account</text>
+  </g>
+  <g>
+    <rect x="600" y="160" width="200" height="100" rx="8" fill="#fed7aa" stroke="#9a3412" stroke-width="2"/>
+    <text x="700" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#7c2d12">[3] GSA</text>
+    <text x="700" y="200" text-anchor="middle" font-size="10" fill="#9a3412">GCP Service Account</text>
+    <text x="700" y="220" text-anchor="middle" font-size="9" font-family="monospace" fill="#7c2d12">event-job@</text>
+    <text x="700" y="232" text-anchor="middle" font-size="9" font-family="monospace" fill="#7c2d12">enetpulse-agent.iam</text>
+    <text x="700" y="244" text-anchor="middle" font-size="9" font-family="monospace" fill="#7c2d12">.gserviceaccount.com</text>
+  </g>
+  <g>
+    <rect x="840" y="160" width="200" height="100" rx="8" fill="#fde68a" stroke="#a16207" stroke-width="2"/>
+    <text x="940" y="184" text-anchor="middle" font-size="13" font-weight="600" fill="#713f12">[4] GCP 资源</text>
+    <text x="940" y="204" text-anchor="middle" font-size="11" fill="#854d0e">GCS Bucket</text>
+    <text x="940" y="222" text-anchor="middle" font-size="9" font-family="monospace" fill="#713f12">enetpulse-agent-audit</text>
+    <text x="940" y="244" text-anchor="middle" font-size="10" fill="#a16207">（也可以是 BigQuery /</text>
+    <text x="940" y="256" text-anchor="middle" font-size="10" fill="#a16207">PubSub / Secret Manager…）</text>
+  </g>
+  <path d="M 280 210 L 320 210" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="278" y="184" width="48" height="16" fill="#ffffff" opacity="0.95"/>
+  <text x="302" y="196" text-anchor="middle" font-size="10" fill="#1e3a8a">使用</text>
+  <path d="M 520 210 L 600 210" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow-purple)" stroke-dasharray="5,3"/>
+  <rect x="514" y="184" width="92" height="16" fill="#ffffff" opacity="0.95"/>
+  <text x="560" y="196" text-anchor="middle" font-size="10" font-weight="600" fill="#5b21b6">扮演 (impersonate)</text>
+  <path d="M 800 210 L 840 210" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="772" y="184" width="96" height="16" fill="#ffffff" opacity="0.95"/>
+  <text x="820" y="196" text-anchor="middle" font-size="10" fill="#7c2d12">objectAdmin role</text>
+  <g transform="translate(50, 310)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#111827">每段 binding 谁定义：</text>
+    <rect x="0" y="14" width="240" height="120" rx="6" fill="#f9fafb" stroke="#cbd5e1" stroke-width="1"/>
+    <text x="14" y="34" font-size="12" font-weight="600" fill="#1e40af">[1→2] Pod 用 KSA</text>
+    <text x="14" y="54" font-size="10" fill="#374151">在 pod manifest 里：</text>
+    <rect x="14" y="62" width="216" height="46" fill="#1f2937" rx="3"/>
+    <text x="22" y="76" font-size="10" font-family="monospace" fill="#86efac">spec:</text>
+    <text x="22" y="90" font-size="10" font-family="monospace" fill="#86efac">  serviceAccountName:</text>
+    <text x="22" y="104" font-size="10" font-family="monospace" fill="#fcd34d">    event-agent-sa</text>
+    <text x="14" y="124" font-size="9" fill="#6b7280" font-style="italic">由你的 K8s manifest 控制</text>
+    <rect x="260" y="14" width="240" height="120" rx="6" fill="#faf5ff" stroke="#a78bfa" stroke-width="1"/>
+    <text x="274" y="34" font-size="12" font-weight="600" fill="#5b21b6">[2→3] KSA 关联 GSA</text>
+    <text x="274" y="54" font-size="10" fill="#374151">在 KSA annotation 里：</text>
+    <rect x="274" y="62" width="216" height="46" fill="#1f2937" rx="3"/>
+    <text x="282" y="76" font-size="10" font-family="monospace" fill="#86efac">annotations:</text>
+    <text x="282" y="90" font-size="9" font-family="monospace" fill="#fcd34d">  iam.gke.io/gcp-service-</text>
+    <text x="282" y="103" font-size="9" font-family="monospace" fill="#fcd34d">    account: event-job@…</text>
+    <text x="274" y="124" font-size="9" fill="#6b7280" font-style="italic">同时 GSA 这边要 grant：roles/iam.workloadIdentityUser</text>
+    <rect x="520" y="14" width="240" height="120" rx="6" fill="#fffbeb" stroke="#fbbf24" stroke-width="1"/>
+    <text x="534" y="34" font-size="12" font-weight="600" fill="#7c2d12">[3→4] GSA 拿资源权限</text>
+    <text x="534" y="54" font-size="10" fill="#374151">在 terraform iam.tf 里：</text>
+    <rect x="534" y="62" width="216" height="46" fill="#1f2937" rx="3"/>
+    <text x="542" y="76" font-size="9" font-family="monospace" fill="#86efac">google_storage_bucket_</text>
+    <text x="542" y="89" font-size="9" font-family="monospace" fill="#86efac">  iam_member:</text>
+    <text x="542" y="102" font-size="9" font-family="monospace" fill="#fcd34d">  role = "objectAdmin"</text>
+    <text x="534" y="124" font-size="9" fill="#6b7280" font-style="italic">由 terraform IaC 配置</text>
+    <rect x="780" y="14" width="220" height="120" rx="6" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+    <text x="794" y="34" font-size="12" font-weight="600" fill="#14532d">关键好处</text>
+    <text x="794" y="54" font-size="10" fill="#15803d">✓ 不需要 GSA JSON key</text>
+    <text x="794" y="70" font-size="10" fill="#15803d">✓ 不需要 secret 挂到 pod</text>
+    <text x="794" y="86" font-size="10" fill="#15803d">✓ token 自动短期轮换</text>
+    <text x="794" y="102" font-size="10" fill="#15803d">✓ key 泄露风险 = 0</text>
+    <text x="794" y="124" font-size="9" fill="#166534" font-style="italic">GCP 推荐的最佳实践</text>
+  </g>
+  <text x="550" y="595" text-anchor="middle" font-size="11" fill="#6b7280" font-style="italic">少任何一段 binding，pod 调 GCS API 就 403。Debug 时按 [1]→[2]→[3]→[4] 顺序检查。</text>
+</svg>

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 680" font-family="-apple-system, BlinkMacSystemFont, &quot;PingFang SC&quot;, &quot;Helvetica Neue&quot;, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#1f2937"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#059669"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#dc2626"/>
+    </marker>
+  </defs>
+  <rect width="1100" height="680" fill="#ffffff"/>
+  <text x="550" y="40" text-anchor="middle" font-size="22" font-weight="600" fill="#111827">Pod · ReplicaSet · Deployment 三层关系</text>
+  <text x="550" y="62" text-anchor="middle" font-size="13" fill="#6b7280">每一层都是上一层的"控制器"，下一层是它"管理的对象"</text>
+  <g>
+    <rect x="60" y="100" width="500" height="80" rx="8" fill="#dbeafe" stroke="#1e40af" stroke-width="2"/>
+    <text x="310" y="128" text-anchor="middle" font-size="14" font-weight="600" fill="#1e3a8a">Deployment</text>
+    <text x="310" y="148" text-anchor="middle" font-size="11" fill="#1e40af">声明: "我要 N 个 pod 跑这个镜像，按这个 spec"</text>
+    <text x="310" y="166" text-anchor="middle" font-size="10" font-family="monospace" fill="#1d4ed8">apiVersion: apps/v1 &#160; kind: Deployment</text>
+  </g>
+  <path d="M 310 180 L 310 230" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <rect x="320" y="195" width="120" height="18" fill="#ffffff" opacity="0.95"/>
+  <text x="380" y="208" font-size="11" fill="#374151">创建 / 管理</text>
+  <g>
+    <rect x="120" y="230" width="380" height="80" rx="8" fill="#fef3c7" stroke="#a16207" stroke-width="2"/>
+    <text x="310" y="258" text-anchor="middle" font-size="14" font-weight="600" fill="#713f12">ReplicaSet</text>
+    <text x="310" y="278" text-anchor="middle" font-size="11" fill="#92400e">职责: "维护 N 个一模一样的 pod 在跑"</text>
+    <text x="310" y="296" text-anchor="middle" font-size="10" font-family="monospace" fill="#a16207">name: my-app-7c8f9d (Deployment 自动起的)</text>
+  </g>
+  <path d="M 310 310 L 200 360" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 310 310 L 310 360" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 310 310 L 420 360" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+  <g>
+    <circle cx="200" cy="395" r="35" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+    <text x="200" y="392" text-anchor="middle" font-size="13" font-weight="600" fill="#064e3b">Pod</text>
+    <text x="200" y="408" text-anchor="middle" font-size="9" fill="#065f46">my-app-a</text>
+  </g>
+  <g>
+    <circle cx="310" cy="395" r="35" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+    <text x="310" y="392" text-anchor="middle" font-size="13" font-weight="600" fill="#064e3b">Pod</text>
+    <text x="310" y="408" text-anchor="middle" font-size="9" fill="#065f46">my-app-b</text>
+  </g>
+  <g>
+    <circle cx="420" cy="395" r="35" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+    <text x="420" y="392" text-anchor="middle" font-size="13" font-weight="600" fill="#064e3b">Pod</text>
+    <text x="420" y="408" text-anchor="middle" font-size="9" fill="#065f46">my-app-c</text>
+  </g>
+  <g transform="translate(50, 240)">
+    <path d="M 25 60 Q 0 60 0 80 Q 0 100 25 100" stroke="#7c3aed" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+    <text x="-20" y="75" text-anchor="middle" font-size="9" fill="#5b21b6" font-weight="600">reconcile</text>
+    <text x="-20" y="88" text-anchor="middle" font-size="9" fill="#5b21b6">loop</text>
+  </g>
+  <g transform="translate(620, 100)">
+    <text x="0" y="20" font-size="13" font-weight="600" fill="#111827">每一层在干啥</text>
+    <rect x="0" y="35" width="430" height="80" rx="6" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1"/>
+    <text x="14" y="55" font-size="12" font-weight="600" fill="#1e40af">Deployment</text>
+    <text x="14" y="74" font-size="11" fill="#374151">• 你 kubectl apply 的 manifest 通常就是这个</text>
+    <text x="14" y="91" font-size="11" fill="#374151">• 滚动升级镜像 → 新建一个 ReplicaSet，旧的逐步缩</text>
+    <text x="14" y="108" font-size="11" fill="#374151">• 改 replicas 数 → 通知现 ReplicaSet 加/减</text>
+    <rect x="0" y="130" width="430" height="80" rx="6" fill="#fffbeb" stroke="#fcd34d" stroke-width="1"/>
+    <text x="14" y="150" font-size="12" font-weight="600" fill="#7c2d12">ReplicaSet</text>
+    <text x="14" y="169" font-size="11" fill="#374151">• 每秒检查 "pod 数 = 期望数" 吗？</text>
+    <text x="14" y="186" font-size="11" fill="#374151">• 少了就建（pod 死了也能自愈）</text>
+    <text x="14" y="203" font-size="11" fill="#374151">• 多了就杀（缩容时删多余的）</text>
+    <rect x="0" y="225" width="430" height="80" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+    <text x="14" y="245" font-size="12" font-weight="600" fill="#064e3b">Pod</text>
+    <text x="14" y="264" font-size="11" fill="#374151">• 真正跑容器的最小单元（1 个或多个 container）</text>
+    <text x="14" y="281" font-size="11" fill="#374151">• 死了不会被自动复活——靠 ReplicaSet 重建一个新的</text>
+    <text x="14" y="298" font-size="11" fill="#374151">• "pod 重启" ≠ "原 pod 复活"——是新 pod 替换</text>
+  </g>
+  <g transform="translate(50, 480)">
+    <text x="0" y="0" font-size="13" font-weight="600" fill="#111827">场景：pod 死了会发生什么</text>
+    <rect x="0" y="14" width="240" height="100" rx="6" fill="#fee2e2" stroke="#dc2626" stroke-width="1"/>
+    <text x="14" y="34" font-size="12" font-weight="600" fill="#7f1d1d">[1] Pod 挂了</text>
+    <text x="14" y="54" font-size="11" fill="#7f1d1d">原因：节点宕机 / OOM /</text>
+    <text x="14" y="68" font-size="11" fill="#7f1d1d">  容器 crash / kubectl delete</text>
+    <text x="14" y="90" font-size="10" fill="#374151" font-style="italic">现在: 期望 3 个，实际 2 个</text>
+    <path d="M 250 64 L 280 64" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <rect x="290" y="14" width="240" height="100" rx="6" fill="#fef3c7" stroke="#a16207" stroke-width="1"/>
+    <text x="304" y="34" font-size="12" font-weight="600" fill="#713f12">[2] ReplicaSet 检测到</text>
+    <text x="304" y="54" font-size="11" fill="#374151">controller 巡检：</text>
+    <text x="304" y="68" font-size="11" fill="#374151">"少 1 个，赶紧建"</text>
+    <text x="304" y="90" font-size="10" fill="#374151" font-style="italic">~10 秒内反应</text>
+    <path d="M 540 64 L 570 64" stroke="#1f2937" stroke-width="1.5" fill="none" marker-end="url(#arrow)"/>
+    <rect x="580" y="14" width="240" height="100" rx="6" fill="#d1fae5" stroke="#059669" stroke-width="1"/>
+    <text x="594" y="34" font-size="12" font-weight="600" fill="#064e3b">[3] 新 Pod 起来</text>
+    <text x="594" y="54" font-size="11" fill="#374151">名字不一样（hash 后缀）</text>
+    <text x="594" y="68" font-size="11" fill="#374151">IP 不一样</text>
+    <text x="594" y="90" font-size="10" fill="#374151" font-style="italic">回到 3 个 = 期望状态</text>
+    <path d="M 700 14 L 700 0 Q 700 -10 690 -10 L 0 -10 Q -10 -10 -10 0 L -10 50" stroke="#7c3aed" stroke-width="1.5" fill="none" stroke-dasharray="4,3"/>
+    <text x="345" y="-15" font-size="10" fill="#5b21b6" font-style="italic">↑ controller 永远在比期望和实际，自愈机制就是这么工作的</text>
+  </g>
+  <g transform="translate(870, 510)">
+    <rect x="0" y="0" width="200" height="120" rx="6" fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.5"/>
+    <text x="100" y="20" text-anchor="middle" font-size="11" font-weight="600" fill="#5b21b6">滚动升级时</text>
+    <text x="14" y="40" font-size="10" fill="#374151">改了 image v1 → v2:</text>
+    <text x="14" y="56" font-size="10" fill="#374151">1. 新 ReplicaSet 建 (v2)</text>
+    <text x="14" y="70" font-size="10" fill="#374151">2. 新 RS 加 1 个 v2 pod</text>
+    <text x="14" y="84" font-size="10" fill="#374151">3. 旧 RS 减 1 个 v1 pod</text>
+    <text x="14" y="98" font-size="10" fill="#374151">4. 重复直到全部替换</text>
+    <text x="14" y="114" font-size="9" fill="#6b7280" font-style="italic">用户感觉 0 downtime</text>
+  </g>
+</svg>
