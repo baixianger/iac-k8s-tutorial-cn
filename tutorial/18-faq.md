@@ -234,19 +234,21 @@ gcloud compute project-info describe \
 为什么空?`project-info describe` 列的是**项目全局**配额(`CPUS_ALL_REGIONS` / `NETWORKS` / ...),而 `SSD_TOTAL_GB` / `CPUS` / `INSTANCES` / `IN_USE_ADDRESSES` 都是**区域级**配额,挂在每个 region 资源下面,不在项目根。
 
 ```bash
-# ✅ 对的:查区域配额。
-gcloud compute regions describe europe-west3 --format=json \
-  | jq '.quotas[] | select(.metric|test("SSD|CPUS|INSTANCES|IN_USE_ADDRESSES"))'
+# ✅ 对的:查区域配额(一条 pipe 就够,不用装 jq)。
+gcloud compute regions describe europe-west3 \
+  --format='value(quotas)' | tr ';' '\n' | grep -iE 'SSD|CPUS|INSTANCES|IN_USE_ADDRESSES'
 ```
 
-输出形如:
+实际输出(Python-repr 风格 —— 单引号、浮点数,这是 gcloud `value()` formatter 的原样输出):
 
-```json
-{ "limit": 500, "metric": "SSD_TOTAL_GB",     "usage": 0 }
-{ "limit": 24,  "metric": "INSTANCES",        "usage": 0 }
-{ "limit": 200, "metric": "CPUS",             "usage": 0 }
-{ "limit": 8,   "metric": "IN_USE_ADDRESSES", "usage": 0 }
 ```
+{'limit': 500.0, 'metric': 'SSD_TOTAL_GB', 'usage': 12.0}
+{'limit': 200.0, 'metric': 'CPUS', 'usage': 0.0}
+{'limit': 24.0,  'metric': 'INSTANCES', 'usage': 0.0}
+{'limit': 8.0,   'metric': 'IN_USE_ADDRESSES', 'usage': 0.0}
+```
+
+要真正的 JSON 拿去喂别的工具:`gcloud compute regions describe europe-west3 --format=json | jq '.quotas[] | select(.metric|test("SSD|CPUS"))'`。
 
 如果命令报 `Required 'compute.googleapis.com' API not enabled` —— 17 章 §1.3 漏开了,补 `gcloud services enable compute.googleapis.com`。
 
