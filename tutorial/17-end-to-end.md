@@ -88,7 +88,7 @@ ls
 # outputs.tf
 ```
 
-> **9 个文件,不是 7 个**：早期教程截图里只有 7 个 `.tf`,但实际仓库还有 `registry.tf`(Artifact Registry 资源)和 `cloudbuild.tf`(`google_project_service` for Cloud Build)。如果手动复制,**两个都不能漏**:漏 `registry.tf` 后面 `docker push` 会报 repository not found;漏 `cloudbuild.tf` `terraform apply` 第一次会有一次 noisy retry。最稳的做法:`git clone` 整个仓库,别一个个 cp。
+> **9 个文件,不是 7 个**：早期教程截图里只有 7 个 `.tf`,但实际仓库还有 `registry.tf`(Artifact Registry 资源,详见 [07b 章](07b-gke-artifact-registry.html))和 `cloudbuild.tf`(`google_project_service` for Cloud Build)。如果手动复制,**两个都不能漏**:漏 `registry.tf` 后面 `docker push` 会报 repository not found;漏 `cloudbuild.tf` `terraform apply` 第一次会有一次 noisy retry。最稳的做法:`git clone` 整个仓库,别一个个 cp。
 
 ### 2.2 自定义 terraform.tfvars
 

@@ -18,7 +18,7 @@ title: 端到端工程教学
 
 ## 章节清单
 
-> ✅ 全部 19 章已完成 — 每章独立，可单独读
+> ✅ 全部 20 章已完成 — 每章独立，可单独读
 
 | 章 | 标题 | 主题 | 状态 |
 |---|---|---|---|
@@ -30,6 +30,7 @@ title: 端到端工程教学
 | 05 | [GKE — 网络](05-gke-network.html) | `network.tf` (VPC, subnet, NAT) | ✅ |
 | 06 | [GKE — Autopilot 集群](06-gke-cluster.html) | `cluster.tf` | ✅ |
 | 07 | [GKE — 存储与 IAM](07-gke-storage-iam.html) | `storage.tf`, `iam.tf` | ✅ |
+| 07b | [GKE — 镜像仓库（Artifact Registry）](07b-gke-artifact-registry.html) | `registry.tf` + Docker 工作流 | ✅ |
 | 08 | [GKE — Outputs](08-gke-outputs.html) | `outputs.tf` | ✅ |
 | 09 | [Hetzner 假设 Terraform](09-hetzner-hypothetical.html) | 同样 IaaS，换 provider | ✅ |
 | 10 | [Hetzner 真实路径](10-hetzner-real-path.html) | `hetzner-k3s` + `cluster.yaml` | ✅ |

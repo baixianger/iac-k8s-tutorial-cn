@@ -5,7 +5,7 @@ title: 08 — GKE Outputs
 
 # 第 08 章：GKE — Outputs（outputs.tf）
 
-> 上一章：[07 — 存储与 IAM](07-gke-storage-iam.html) · [章节索引](./)
+> 上一章：[07b — 镜像仓库（Artifact Registry）](07b-gke-artifact-registry.html) · [章节索引](./)
 
 GKE 的最后一个文件。`outputs.tf` 比前面任何一个都简单 —— 它只声明 "apply 完之后要把哪些值暴露出去"。
 
