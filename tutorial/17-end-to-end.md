@@ -53,17 +53,24 @@ gcloud auth application-default login
 gcloud projects create my-cloud-project   # 全球唯一
 gcloud config set project my-cloud-project
 
-# 启用必要 API
-gcloud services enable container.googleapis.com    \
-                       compute.googleapis.com       \
-                       artifactregistry.googleapis.com \
-                       storage.googleapis.com       \
-                       iam.googleapis.com           \
-                       cloudresourcemanager.googleapis.com
+# 启用必要 API（一次开 8 个，缺一个 terraform apply 就会在中途炸）
+gcloud services enable \
+  compute.googleapis.com           \
+  container.googleapis.com         \
+  artifactregistry.googleapis.com  \
+  storage.googleapis.com           \
+  iam.googleapis.com               \
+  iamcredentials.googleapis.com    \
+  servicenetworking.googleapis.com \
+  cloudbuild.googleapis.com
 
 # 链接 billing（不链不能开 GKE）
 # 在 Console 里给 project 关联一个 billing account
 ```
+
+> **为什么是这 8 个**：`compute`(VPC + NAT)、`container`(GKE)、`artifactregistry`(镜像仓库)、`storage`(GCS bucket)、`iam` + `iamcredentials`(GSA + Workload Identity 必需,**少 `iamcredentials` WI 绑定会失败**)、`servicenetworking`(私有集群控制平面 peering,**少这个 `terraform apply` 会卡在 cluster 创建那一步报 API not enabled**)、`cloudbuild`(Terraform 的 `google_project_service` 资源会用)。
+>
+> `cloudresourcemanager` 项目创建后默认是开的,不用手动 enable。
 
 GCP 给你 $300 免费额度，跑这个教程绰绰有余。
 
@@ -76,8 +83,12 @@ GCP 给你 $300 免费额度，跑这个教程绰绰有余。
 ```bash
 cd cloud/deployments/stacks/gke/infra/
 ls
-# main.tf  variables.tf  network.tf  cluster.tf  storage.tf  iam.tf  outputs.tf
+# main.tf       variables.tf  network.tf  cluster.tf
+# storage.tf    iam.tf        registry.tf cloudbuild.tf
+# outputs.tf
 ```
+
+> **9 个文件,不是 7 个**：早期教程截图里只有 7 个 `.tf`,但实际仓库还有 `registry.tf`(Artifact Registry 资源)和 `cloudbuild.tf`(`google_project_service` for Cloud Build)。如果手动复制,**两个都不能漏**:漏 `registry.tf` 后面 `docker push` 会报 repository not found;漏 `cloudbuild.tf` `terraform apply` 第一次会有一次 noisy retry。最稳的做法:`git clone` 整个仓库,别一个个 cp。
 
 ### 2.2 自定义 terraform.tfvars
 

@@ -223,12 +223,38 @@ kubectl get pod my-pod -o yaml | grep serviceAccount
 
 GCE 配额不够。最常见的是 `SSD_TOTAL_GB`（每个 Autopilot 节点 ~100GB pd-balanced，默认 500 GB → 4 节点上限）。
 
+#### 查当前配额(命令选错了会一直查不出来)
+
 ```bash
-gcloud compute project-info describe --format="value(quotas[].metric, quotas[].limit, quotas[].usage)" \
-  | grep -i ssd
+# ❌ 错的：什么都不输出。
+gcloud compute project-info describe \
+  --format='value(quotas)' | grep -i ssd
 ```
 
-去 Console > IAM > Quotas 申请加 quota。
+为什么空?`project-info describe` 列的是**项目全局**配额(`CPUS_ALL_REGIONS` / `NETWORKS` / ...),而 `SSD_TOTAL_GB` / `CPUS` / `INSTANCES` / `IN_USE_ADDRESSES` 都是**区域级**配额,挂在每个 region 资源下面,不在项目根。
+
+```bash
+# ✅ 对的:查区域配额。
+gcloud compute regions describe europe-west3 --format=json \
+  | jq '.quotas[] | select(.metric|test("SSD|CPUS|INSTANCES|IN_USE_ADDRESSES"))'
+```
+
+输出形如:
+
+```json
+{ "limit": 500, "metric": "SSD_TOTAL_GB",     "usage": 0 }
+{ "limit": 24,  "metric": "INSTANCES",        "usage": 0 }
+{ "limit": 200, "metric": "CPUS",             "usage": 0 }
+{ "limit": 8,   "metric": "IN_USE_ADDRESSES", "usage": 0 }
+```
+
+如果命令报 `Required 'compute.googleapis.com' API not enabled` —— 17 章 §1.3 漏开了,补 `gcloud services enable compute.googleapis.com`。
+
+#### 申请加 quota
+
+去 Console → IAM & Admin → Quotas & System Limits → filter `Service: Compute Engine API` + `Region: europe-west3` → 选中 → Edit Quotas → 填新值 + 业务理由。
+
+经验值:smoke test 把 `SSD_TOTAL_GB` 加到 700 GB 够用;生产 500 inpage pod 并发要加到 5000 GB(每节点 ~100 GB × 36 节点 + 余量)。新项目首次申请通常 24–48h,有付款历史的项目 30 分钟到几小时。
 
 ### Q17：怎么省 GKE 的钱？
 
